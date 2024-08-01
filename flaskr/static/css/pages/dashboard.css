@@ -1,0 +1,150 @@
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: rgb(253, 253, 253);
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem 1rem;
+  z-index: 1;
+}
+
+.frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background-color: var(--primary-color);
+  z-index: 2;
+}
+
+.nav-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  padding-top: 2rem;
+  z-index: 3;
+}
+.nav-wrapper .nav-link {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  width: 8rem;
+  text-align: center;
+  font-weight: 500;
+  padding-bottom: 0.5rem;
+  transition: all ease 0.3s;
+}
+.nav-wrapper .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0rem;
+  left: 50%;
+  width: 0rem;
+  transform: translateX(-50%);
+  height: 0.2rem;
+  background-color: white;
+  transition: all ease 0.3s;
+}
+.nav-wrapper .nav-link:hover::after {
+  width: 8rem;
+}
+.nav-wrapper .nav-link.active {
+  cursor: none;
+  pointer-events: none;
+  font-weight: 900;
+  color: var(--secondary-color);
+  background-color: white;
+}
+.nav-wrapper .nav-link.active::after {
+  width: 8rem;
+  background-color: var(--secondary-color);
+}
+
+.content-wrapper {
+  position: relative;
+  flex: 1;
+  background-color: white;
+  width: 90%;
+  max-width: 60rem;
+  box-shadow: 0 0 1rem 2px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  overflow: hidden;
+}
+.page-wrapper {
+  position: relative;
+  background-color: white;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  transition: all ease 0.3s;
+}
+.page-wrapper.page-slider {
+  position: absolute;
+  top: 0;
+  right: -100%;
+}
+.page-wrapper.page-slider.active {
+  right: 0%;
+}
+
+.card-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  box-shadow: 0 0 1rem 2px rgba(0, 0, 0, 0.2);
+  font-size: 1.2rem;
+}
+.card-counter p {
+  margin: 0;
+  padding: 0;
+}
+.card-counter p:nth-child(1) {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+#dataset .title {
+  font-size: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+#dataset .title::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 5rem;
+  height: 0.1rem;
+  background-color: var(--secondary-color);
+  transform: translateX(-50%);
+}
+
+#dataset .image-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+#dataset .image-container img {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  border: 0.25rem solid white;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+  transition: all ease 0.3s;
+}

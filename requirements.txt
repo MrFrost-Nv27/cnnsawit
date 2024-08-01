@@ -1,0 +1,17 @@
+numpy==1.26.4
+pandas==2.2.1
+matplotlib
+scikit-learn
+python-dotenv
+flask-restplus
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Seeder
+flask_cors
+sqlalchemy-easy-softdelete
+mysqlclient
+Flask-mysql
+SQLAlchemy-serializer
+SQLAlchemy
+openpyxl
+tensorflow

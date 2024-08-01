@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNN Sawit</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/png">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dt/datatables.min.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css')}}" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pages/dashboard.css')}}" />
+  {% block style %}{% endblock %}
+</head>
+
+<body>
+
+  <div class="frame">
+    <div class="nav-wrapper">
+      <a class="nav-link" href="{{ url_for('views.home') }}" data-page="home">Dataset</a>
+      <a class="nav-link" href="{{ url_for('views.pelatihan') }}" data-page="pelatihan">Pelatihan</a>
+      <a class="nav-link" href="{{ url_for('views.prediksi') }}" data-page="prediksi">Prediksi</a>
+    </div>
+    <div class="content-wrapper">
+      {% block inside %}{% endblock %}
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/chart.umd.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/swal.js')}}"></script>
+  <script src="{{ url_for('static', filename='dt/datatables.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/utils/puller.js')}}"></script>
+  <script>
+    let page = "{{ page }}";
+    const cloud = new Puller();
+  </script>
+  <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+  {% block script %}{% endblock %}
+</body>
+
+</html>
