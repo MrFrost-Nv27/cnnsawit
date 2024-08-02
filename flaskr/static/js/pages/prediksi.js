@@ -1,34 +1,53 @@
-const table = {
-  periksa: $("#table-periksa").DataTable({
-    responsive: true,
-    ajax: {
-      url: origin + "/api/periksa",
-      dataSrc: "data",
-    },
-    columns: [
-      {
-        title: "#",
-        data: "id",
-        render: function (data, type, row, meta) {
-          return meta.row + meta.settings._iDisplayStart + 1;
-        },
-      },
-      { title: "Nama", data: "nama" },
-      { title: "Usia", data: "usia" },
-      { title: "Jenis Kelamin", data: "jenis_kelamin" },
-      { title: "Berat Badan", data: "bb" },
-      { title: "Tinggi Badan", data: "tb" },
-      {
-        title: "Aksi",
-        data: "id",
-        render: (data, type, row) => {
-          return `<div class="table-control">
-            <a role="button" class="btn waves-effect waves-light btn-action red" data-action="delete" data-id="${data}"><i class="material-icons">delete</i></a>
-            </div>`;
-        },
-      },
-    ],
-  }),
-};
+$("body").on("submit", "#form-prediksi", function (e) {
+  e.preventDefault();
+  const loader = $("#loader-prediksi");
+  const form = $(this);
+  const data = new FormData();
+  data.append("name", $("#name").val());
+  data.append("image", $("#image")[0].files[0]);
 
-$(document).ready(async function () {});
+  form.find("input, button, textarea").prop("disabled", true);
+  loader.fadeIn("fast");
+  $.ajax({
+    type: "POST",
+    url: origin + "/api/prediksi",
+    data: data,
+    contentType: false,
+    processData: false,
+    cache: false,
+    success: function (data) {
+      loader.fadeOut("fast");
+      form.find("input, button, textarea").prop("disabled", false);
+      $("#hasil").text(data.label);
+      $.each(data.classes, function (i, c) { 
+        $("#nilai-" + c).text(data.predictions[i]);
+      });
+      $("#form-prediksi").trigger("reset");
+      M.toast({ html: "Data diprediksi" });
+    },
+  });
+});
+
+$(document).ready(async function () {
+  cloud
+    .add(origin + "/api/dataset", {
+      name: "dataset",
+      callback: (data) => {},
+    })
+    .then((dataset) => {
+      $.each(dataset, function (kelas, images) {
+        $("#table-prediksi tbody").append("<tr><td>" + kelas + `</td><td id="nilai-${kelas}"></td></tr>`);
+      });
+    });
+  cloud
+    .add(origin + "/api/models", {
+      name: "models",
+      callback: (data) => {},
+    })
+    .then((models) => {
+      $.each(models, function (i, model) {
+        $("#name").append("<option value='" + model.name + "'>" + capEachWord(model.name.replace("_", " ")) + "</option>");
+      });
+      $("#name").formSelect();
+    });
+});

@@ -1,6 +1,32 @@
 {% extends "layout/dashboard.html" %}
 {% block inside %}
 <div class="page-wrapper">
+  <div class="container">
+    <form class="row" method="post" id="form-pelatihan">
+      <div class="col s8 input-field">
+        <input id="input-pelatihan" name="name" type="text" class="validate">
+        <label for="input-pelatihan">Nama Model</label>
+      </div>
+      <div class="col s4 center input-field">
+        <button class="waves-effect waves-light btn" id="btn-pelatihan" type="submit">Tambah</button>
+      </div>
+    </form>
+    <div class="row" style="display: none;" id="loader-pelatihan">
+      <div class="col s12">
+        <p class="center">Melatih  Model</p>
+      </div>
+      <div class="col s12">
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <table id="table-pelatihan"></table>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
 {% block script %}
