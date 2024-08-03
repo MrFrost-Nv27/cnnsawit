@@ -12,6 +12,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import pickle
 from re import sub
+import os
 
 TF_ENABLE_ONEDNN_OPTS = 0
 
@@ -77,9 +78,11 @@ def pelatihan():
         steps_per_epoch=train_generator.samples // train_generator.batch_size,
         validation_data=valid_generator,
         validation_steps=valid_generator.samples // valid_generator.batch_size,
-        epochs=50
+        epochs=5
     )
 
+    if not os.path.exists('models'):
+        os.makedirs('models')
     scores = model.evaluate(valid_generator)
 
     class_labels = list(train_generator.class_indices.keys())
