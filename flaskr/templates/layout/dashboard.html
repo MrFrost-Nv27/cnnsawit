@@ -10,7 +10,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dt/datatables.min.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/materialize.min.css')}}" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/pages/dashboard.css')}}" />
   {% block style %}{% endblock %}
@@ -22,7 +23,7 @@
     <div class="nav-wrapper">
       <a class="nav-link" href="{{ url_for('views.home') }}" data-page="home">Dataset</a>
       <a class="nav-link" href="{{ url_for('views.pelatihan') }}" data-page="pelatihan">Pelatihan</a>
-      <a class="nav-link" href="{{ url_for('views.prediksi') }}" data-page="prediksi">Prediksi</a>
+      <a class="nav-link" href="{{ url_for('views.prediksi') }}" data-page="prediksi">Identifikasi</a>
     </div>
     <div class="content-wrapper">
       {% block inside %}{% endblock %}

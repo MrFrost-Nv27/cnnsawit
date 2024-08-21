@@ -49,6 +49,22 @@ $("body").on("submit", "#form-pelatihan", function (e) {
   });
 });
 
+// delete
+$("body").on("click", ".btn-action", function () {
+  const action = $(this).data("action");
+  const id = $(this).data("id");
+  if (action === "delete") {
+    $.ajax({
+      type: "DELETE",
+      url: origin + "/api/models/" + id,
+      success: function (data) {
+        table.pelatihan.ajax.reload();
+        M.toast({ html: "Model berhasil dihapus" });
+      },
+    });
+  }
+});
+
 $(document).ready(async function () {
   $(document).ready(async function () {
     cloud

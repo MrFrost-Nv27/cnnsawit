@@ -158,15 +158,29 @@ def models():
     return names, 200
 
 
+
+
 @api.route("/models/<name>", methods=["GET", "DELETE"])
 def modelsDelete(name):
     if request.method == 'DELETE':
-        pathlib.Path("models/" + name).unlink()
-        return {"toast": {
-            "icon": "success",
-            "title": "Data berhasil dihapus"
-        }}, 200
+        model_path = pathlib.Path(f"models/{name}.keras")
+        history_path = pathlib.Path(f"models/{name}.history")
+        class_path = pathlib.Path(f"models/{name}.class")
+        scores_path = pathlib.Path(f"models/{name}.scores")
 
+        # Delete the files if they exist
+        if model_path.exists():
+            model_path.unlink()
+        if history_path.exists():
+            history_path.unlink()
+        if class_path.exists():
+            class_path.unlink()
+        if scores_path.exists():
+            scores_path.unlink()
+
+        return jsonify({"toast": {"icon": "success", "title": "Data berhasil dihapus"}}), 200
+
+    # For GET method, return the model details
     with open(f'models/{name}.history', "rb") as file_pi:
         history = pickle.load(file_pi)
     with open(f'models/{name}.class', "rb") as file_pi:
@@ -174,8 +188,10 @@ def modelsDelete(name):
     with open(f'models/{name}.scores', "rb") as file_pi:
         scores = pickle.load(file_pi)
 
-    return {
+    return jsonify({
         "history": history,
         "class_labels": class_labels,
         "scores": scores
-    }
+    })
+
+

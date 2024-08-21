@@ -19,7 +19,7 @@ $("body").on("submit", "#form-prediksi", function (e) {
       loader.fadeOut("fast");
       form.find("input, button, textarea").prop("disabled", false);
       $("#hasil").text(data.label);
-      $.each(data.classes, function (i, c) { 
+      $.each(data.classes, function (i, c) {
         $("#nilai-" + c).text(data.predictions[i]);
       });
       $("#form-prediksi").trigger("reset");
@@ -36,7 +36,9 @@ $(document).ready(async function () {
     })
     .then((dataset) => {
       $.each(dataset, function (kelas, images) {
-        $("#table-prediksi tbody").append("<tr><td>" + kelas + `</td><td id="nilai-${kelas}"></td></tr>`);
+        $("#table-prediksi tbody").append(
+          "<tr><td>" + kelas + `</td><td id="nilai-${kelas}"></td></tr>`
+        );
       });
     });
   cloud
@@ -46,7 +48,13 @@ $(document).ready(async function () {
     })
     .then((models) => {
       $.each(models, function (i, model) {
-        $("#name").append("<option value='" + model.name + "'>" + capEachWord(model.name.replace("_", " ")) + "</option>");
+        $("#name").append(
+          "<option value='" +
+            model.name +
+            "'>" +
+            capEachWord(model.name.replace("_", " ")) +
+            "</option>"
+        );
       });
       $("#name").formSelect();
     });
