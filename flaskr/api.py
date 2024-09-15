@@ -79,7 +79,7 @@ def pelatihan():
         steps_per_epoch=train_generator.samples // train_generator.batch_size,
         validation_data=valid_generator,
         validation_steps=valid_generator.samples // valid_generator.batch_size,
-        epochs=5
+        epochs=20
     )
 
     if not os.path.exists('models'):
