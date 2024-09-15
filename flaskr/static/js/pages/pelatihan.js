@@ -13,7 +13,11 @@ const table = {
           return meta.row + meta.settings._iDisplayStart + 1;
         },
       },
-      { title: "Nama Model", data: "name", render: (data) => capEachWord(data.replace("_", " ")) },
+      {
+        title: "Nama Model",
+        data: "name",
+        render: (data) => capEachWord(data.replace("_", " ")),
+      },
       { title: "Akurasi", data: "akurasi" },
       {
         title: "Aksi",
@@ -21,6 +25,7 @@ const table = {
         render: (data, type, row) => {
           return `<div class="table-control">
             <a role="button" class="btn waves-effect waves-light btn-action red" data-action="delete" data-id="${data}"><i class="material-icons">delete</i></a>
+            <a role="button" class="btn waves-effect waves-light btn-action blue" data-action="show-accuracy" data-id="${data}"><i class="material-icons">graphic_eq</i></a>
             </div>`;
         },
       },
@@ -49,10 +54,11 @@ $("body").on("submit", "#form-pelatihan", function (e) {
   });
 });
 
-// delete
+// Handle accuracy plot button click
 $("body").on("click", ".btn-action", function () {
   const action = $(this).data("action");
   const id = $(this).data("id");
+
   if (action === "delete") {
     $.ajax({
       type: "DELETE",
@@ -62,6 +68,10 @@ $("body").on("click", ".btn-action", function () {
         M.toast({ html: "Model berhasil dihapus" });
       },
     });
+  } else if (action === "show-accuracy") {
+    const imageUrl = origin + "/api/models/" + id + "/accuracy_plot";
+    $("#accuracyImage").attr("src", imageUrl);
+    $("#accuracyModal").modal("open");
   }
 });
 
@@ -80,4 +90,5 @@ $(document).ready(async function () {
       })
       .then((models) => {});
   });
+  $(".modal").modal();
 });

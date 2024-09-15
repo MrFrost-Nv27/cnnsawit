@@ -13,7 +13,7 @@
     </form>
     <div class="row" style="display: none;" id="loader-pelatihan">
       <div class="col s12">
-        <p class="center">Melatih  Model</p>
+        <p class="center">Melatih Model</p>
       </div>
       <div class="col s12">
         <div class="progress">
@@ -28,6 +28,19 @@
     </div>
   </div>
 </div>
+<!-- Modal Structure -->
+<div id="accuracyModal" class="modal modal-fixed-footer">
+  <div class="modal-content">
+
+    <img id="accuracyImage" src="" alt="Accuracy Plot" style="width: 100%; height: auto;">
+  </div>
+  <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+    <p style="margin: 0;">Accuracy Plot</p>
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+
+</div>
+
 {% endblock %}
 {% block script %}
 <script src="{{ url_for('static', filename='js/pages/pelatihan.js')}}"></script>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify, send_file
 from . import db
 import numpy as np
 import pathlib
@@ -13,6 +13,8 @@ from tensorflow.keras.preprocessing import image
 import pickle
 from re import sub
 import os
+import matplotlib.pyplot as plt
+
 
 TF_ENABLE_ONEDNN_OPTS = 0
 
@@ -54,8 +56,7 @@ def pelatihan():
         'flaskr/static/img/dataset', target_size=(256, 256), batch_size=32, class_mode='categorical')
 
     class_names = list(train_generator.class_indices.keys())
-    print(class_names)
-
+    
     model = Sequential([
         Conv2D(32, (3, 3), activation='relu',
                input_shape=train_generator.image_shape),
@@ -94,6 +95,20 @@ def pelatihan():
     with open(f'models/{name}.scores', 'wb') as file_pi:
         pickle.dump(scores, file_pi)
     model.save(f'models/{name}.keras')
+
+    # Plot grafik akurasi
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+
+    # Simpan grafik ke file
+    plt.savefig(f'models/{name}_accuracy_plot.png')  # Simpan dalam format PNG
+
+    plt.close()  # Menutup grafik setelah menyimpannya
+    
 
     return {
         "scores": scores,
@@ -158,8 +173,6 @@ def models():
     return names, 200
 
 
-
-
 @api.route("/models/<name>", methods=["GET", "DELETE"])
 def modelsDelete(name):
     if request.method == 'DELETE':
@@ -194,4 +207,10 @@ def modelsDelete(name):
         "scores": scores
     })
 
-
+@api.route("/models/<name>/accuracy_plot", methods=["GET"])
+def get_accuracy_plot(name):
+    image_path = os.path.join(os.getcwd(), f'models/{name}_accuracy_plot.png')
+    if os.path.exists(image_path):
+        return send_file(image_path, mimetype='image/png')
+    else:
+        return jsonify({"error": "Image not found"}), 404
